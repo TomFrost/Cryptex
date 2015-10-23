@@ -263,9 +263,9 @@ This was not included in the Cryptex package.json to keep dependencies lean and 
 for folks who don't need that library.
 
 ## Security warning
-The state of security in Javascript is abysmal at best. Node lends itself to far
-better possibilities than what you'd find in the browser, but be aware of the following
-types of attacks:
+The state of cryptographic security in Javascript is abysmal at best. Node lends itself
+to far better possibilities than what you'd find in the browser, but be aware of the
+following types of attacks:
 
 - Javascript modules that require('cryptex') or some other portion of your code,
 overriding `getSecret` or other functions to steal your decrypted private data.
