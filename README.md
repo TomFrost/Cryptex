@@ -1,4 +1,8 @@
-# Cryptex  
+<a href="http://promisesaplus.com/">
+    <img src="https://promises-aplus.github.io/promises-spec/assets/logo-small.png"
+         align="right" valign="top" alt="Promises/A+ logo" />
+</a>
+# Cryptex [![Build Status](https://travis-ci.org/TechnologyAdvice/Cryptex.svg?branch=master)](https://travis-ci.org/TechnologyAdvice/Cryptex) [![Code Climate](https://codeclimate.com/github/TechnologyAdvice/Cryptex/badges/gpa.svg)](https://codeclimate.com/github/TechnologyAdvice/Cryptex) [![Test Coverage](https://codeclimate.com/github/TechnologyAdvice/Cryptex/badges/coverage.svg)](https://codeclimate.com/github/TechnologyAdvice/Cryptex/coverage) 
 Secure secret storage and cryptographic key retrieval for Node.js
 
 ```javascript
