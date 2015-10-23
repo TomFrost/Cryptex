@@ -10,7 +10,7 @@ var cryptex = require('cryptex');
 
 cryptex.getSecret('mySQLPass').then(function(pass) {
   conn = mysql.connect({
-    user: username,
+    username: user,
     password: pass,
     host: hostname
   });
