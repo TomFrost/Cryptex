@@ -99,7 +99,7 @@ If your secure key is available in a file, use this method. Note, however, that 
 your responsibility to make sure that key file stays secure and inaccessible to prying
 eyes!
 
-If your key file something other than binary-encoded? Set `keySourceEncoding` in your
+Is your key file something other than binary-encoded? Set `keySourceEncoding` in your
 config, or set the `CRYPTEX_KEYSOURCEENCODING` environment variable, to either `base64`
 or `hex`.
 
