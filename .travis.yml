@@ -2,10 +2,6 @@ language: node_js
 node_js:
   - "0.12"
   - "4.2"
-addons:
-  code_climate:
-    repo_token:
-      secure: "PHl1F8LmfPOERNgr0mdxsW+G/oySX1E5H9+OvJSDaJnNFc/7APIEGXZRRxDN1HlL6Nb1P31a9LPSj62og5WV6QyXJqTyu+CfYuiY9oaQGXlqc1wGZ8Y9LFVBUQ2kbnS9vwJO/JLnNXRsKQG+3QUp029F8oz4Ebe4+l+Hk2eOgSM0yY4CKkP2BFOFDU4rC0ORsWxrOr3mCp2MBDJ1UMaglGruVsHcNByZfgLGkrPGBc90GAtE1iKzUsLF1gSsQURdhmGJookDW/277qfvgTHF329WT8NxQkcnKRLHDXyYuTRUkdHP8zyZact7GkOaSo4BuvQk+BZRe4NnlTcAH+AgCDSeuMMv34UEILPn66E1hk7PCx8ScOMmNjLJ2pdb5rcA/ocHSCtFQbVk6p0hAZh3l+f3uN4f4Zy3ju377/ZMm/O2YXmkPGdRW1RylQalmzWAwar0eq7RPs/OByIxGdl+/wIXvcR6z08XFJN99ieKNQINUD8+mnMfIqyoY8AtjdBAqyPrbZOnb8APyGVonIVp24ppw4KY0CrxUt9Uk2V35L9v//zSVEvScrPNhOYaf0V3QDkd3IQHyQTnvpUop5jhiVCI2J64bgkNZyQsUTyK2iafP0F63YMb8cJuhUx3OfLgqh+zo9ESzKB2Xa7zOePpE/LfBsskxHO32nFoohDxyGs="
 after_script:
   - npm install -g codeclimate-test-reporter
-  - cat coverage/lcov.info | codeclimate
+  - codeclimate-test-reporter < coverage/lcov.info
