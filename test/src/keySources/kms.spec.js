@@ -9,7 +9,11 @@ import nock from 'nock';
 const dataKey = 'foo=';
 const plainKey = 'WJcfREHOMttStwb1927PQwpDJgOgRyVoVMODQxx3pK4=';
 
-AWS.config.update({region: 'us-east-1'});
+AWS.config.update({
+  accessKeyId: '1234567890',
+  secretAccessKey: '1234567890',
+  region: 'us-east-1'
+});
 
 describe('KMS Source', () => {
   afterEach(() => nock.cleanAll());
