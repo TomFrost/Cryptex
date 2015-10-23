@@ -1,0 +1,10 @@
+{
+  "default": {
+    "keySource": null,
+    "algorithm":  "plaintext",
+    "secretEncoding": "utf8",
+    "secrets": {
+      "foo": "bar"
+    }
+  }
+}

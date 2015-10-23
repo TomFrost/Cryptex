@@ -1,0 +1,13 @@
+# NPM
+node_modules/
+logs/
+**/*.log
+
+# Tools
+coverage
+
+# Build
+build/
+
+# JetBrains
+.idea
