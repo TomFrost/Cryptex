@@ -24,7 +24,7 @@ const argv = yargs
 const output = console.log;
 
 function run() {
-  cryptex.update({ environment: argv.e });
+  cryptex.update({ env: argv.e });
   switch (argv._[0]) {
   case 'encrypt':
     return cryptex.encrypt(argv._[1]).then(output);

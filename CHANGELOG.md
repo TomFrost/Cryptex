@@ -10,6 +10,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Minor documentation corrections
 
+### Fixed
+- Relative path issues when requiring modules
+- CLI's -e flag not being observed
+
 ## v0.1.0 - 2015-10-23
 ### Added
 - Initial release
