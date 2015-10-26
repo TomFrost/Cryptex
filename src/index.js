@@ -155,7 +155,7 @@ class Cryptex {
     if (module.includes(path.sep)) {
       throw new Error(`Invalid module name: "${module}"`);
     }
-    const reqPath = '.' + path.sep + path.join(dir, module);
+    const reqPath = path.join(__dirname, dir, module);
     if (!Cryptex._requires[reqPath]) {
       try {
         Cryptex._requires[reqPath] = require(reqPath);
