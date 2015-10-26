@@ -12,7 +12,7 @@
     "test-cov": "babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha",
     "check-cov": "babel-istanbul check-coverage --statements 99 --branches 98 --functions 100 --lines 99",
     "lint": "eslint ./src ./test",
-    "prepublish": "npm test && npm build"
+    "prepublish": "npm test && npm run build"
   },
   "repository": {
     "type": "git",
