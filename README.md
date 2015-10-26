@@ -263,15 +263,7 @@ npm install --save cryptex
 ```
 
 ## Dependencies
-Cryptex uses ES6 native Promises, available in Node.js version 0.12 and up. In order
-to use the Amazon KMS retriever, the following is required:
-
-```
-npm install --save aws-sdk
-```
-
-This was not included in the Cryptex package.json to keep dependencies lean and mean
-for folks who don't need that library.
+Cryptex uses ES6 native Promises, available in Node.js version 0.12 and up.
 
 ## Security warning
 The state of cryptographic security in Javascript is abysmal at best. Node lends itself
