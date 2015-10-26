@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Travis.ci testing
 - CodeClimate
+- 'region' KMS option
 
 ### Changed
 - Minor documentation corrections

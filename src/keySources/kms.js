@@ -5,6 +5,10 @@
 import AWS from 'aws-sdk';
 
 function getKey(opts = {}) {
+  const region = process.env.CRYPTEX_KEYSOURCE_KMS_REGION || opts.region;
+  if (region) {
+    AWS.config.update({ region });
+  }
   const kms = new AWS.KMS();
   opts.dataKey = process.env.CRYPTEX_KEYSOURCE_KMS_DATAKEY || opts.dataKey;
   return new Promise((resolve, reject) => {

@@ -97,6 +97,9 @@ aws kms generate-data-key-without-plaintext \
 ##### kms options:
 `dataKey` `CRYPTEX_KEYSOURCE_KMS_PATH`: The base64 string you got when you ran that
 command above
+`region` `CRYPTEX_KEYSOURCE_KMS_REGION`: The AWS region (such as us-east-1) in which
+the master KMS key can be found. If not specified, the config already loaded into
+aws-sdk is used.
 
 #### Load from file _("file")_
 If your secure key is available in a file, use this method. Note, however, that it is
