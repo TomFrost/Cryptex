@@ -29,4 +29,5 @@ function getKey(opts = {}) {
   });
 }
 
+getKey.AWS = AWS;
 export default getKey;
