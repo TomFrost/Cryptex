@@ -157,11 +157,7 @@ class Cryptex {
     }
     const reqPath = path.join(__dirname, dir, module);
     if (!Cryptex._requires[reqPath]) {
-      try {
-        Cryptex._requires[reqPath] = require(reqPath);
-      } catch (e) {
-        throw new Error(`The module "${reqPath}" does not exist.`);
-      }
+      Cryptex._requires[reqPath] = require(reqPath);
     }
     return Cryptex._requires[reqPath];
   }
