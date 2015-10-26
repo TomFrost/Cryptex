@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Development]
 Nothing yet!
 
+## [v0.2.1] - 2015-10-26
+### Fixed
+- Invalid build to NPM
+
 ## [v0.2.0] - 2015-10-26
 ### Added
 - Travis.ci testing
@@ -21,5 +25,6 @@ Nothing yet!
 ### Added
 - Initial release
 
-[Development]: https://github.com/TechnologyAdvice/Cryptex/compare/0.2.0...HEAD
+[Development]: https://github.com/TechnologyAdvice/Cryptex/compare/0.2.1...HEAD
+[v0.2.1]: https://github.com/TechnologyAdvice/Cryptex/compare/0.2.0...0.2.1
 [v0.2.0]: https://github.com/TechnologyAdvice/Cryptex/compare/0.1.0...0.2.0
