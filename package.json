@@ -40,7 +40,6 @@
   },
   "homepage": "https://github.com/TechnologyAdvice/Cryptex#readme",
   "devDependencies": {
-    "aws-sdk": "^2.2.10",
     "babel": "^5.8.23",
     "babel-eslint": "^4.1.3",
     "babel-istanbul": "^0.3.20",
@@ -53,6 +52,7 @@
     "tmp": "0.0.28"
   },
   "dependencies": {
+    "aws-sdk": "^2.2.10",
     "lodash": "^3.10.1",
     "request": "^2.65.0",
     "yargs": "^3.29.0"

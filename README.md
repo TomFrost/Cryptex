@@ -101,6 +101,14 @@ command above
 the master KMS key can be found. If not specified, the config already loaded into
 aws-sdk is used.
 
+**A note about aws-sdk configuration:** The KMS keySource uses Amazon's official Node.js
+aws-sdk library. If you're using `npm>=3`, it will use the same object as any you might
+have in your local project, carrying over the configuration. Otherwise, please see
+Amazon's guide on [configuring the SDK](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html)
+to provide it with credentials. The **highly recommended way** to allow it to access
+KMS in production (assuming it's in production on AWS servers) is to attach an IAM role
+to the EC2 node with permission to access the master key you're using.
+
 #### Load from file _("file")_
 If your secure key is available in a file, use this method. Note, however, that it is
 your responsibility to make sure that key file stays secure and inaccessible to prying
