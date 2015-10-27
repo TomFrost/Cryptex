@@ -60,7 +60,7 @@ class Cryptex {
     const secretUp = secret.toUpperCase();
     const enc = process.env[`CRYPTEX_SECRET_${secretUp}`] || this._config.secrets[secret];
     if (!enc) {
-      return Promise.reject(new Error(`Cryptex secret "${secret}" not found`));
+      return Promise.resolve(null);
     }
     return this.decrypt(enc, this._config.secretEncoding);
   }

@@ -2,7 +2,10 @@
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Development]
-Nothing yet!
+### Changed
+- Calling getSecret() for a missing secret now resolves to null instead of rejecting.
+This is in an effort to separate actual key source failures from a possibly optional
+secret.
 
 ## [v0.2.2] - 2015-10-26
 ### Fixed
