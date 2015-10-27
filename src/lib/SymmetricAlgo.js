@@ -18,15 +18,14 @@ export default class SymmetricAlgo {
     const iv = ivEnc.slice(0, this.ivBytes);
     const enc = ivEnc.slice(this.ivBytes);
     const decipher = crypto.createDecipheriv(this.algo, key, iv);
-    decipher.update(enc);
-    return Promise.resolve(decipher.final(decEncoding));
+    const decBuf = Buffer.concat([decipher.update(enc), decipher.final()]);
+    return Promise.resolve(decBuf.toString(decEncoding));
   }
 
   encrypt(key, secret) {
     return this._generateIV().then((iv) =>{
       const cipher = crypto.createCipheriv(this.algo, key, iv);
-      cipher.update(secret, decEncoding);
-      const enc = cipher.final();
+      const enc = Buffer.concat([cipher.update(secret), cipher.final()]);
       const ivEnc = Buffer.concat([iv, enc], iv.length + enc.length);
       return ivEnc.toString(encEncoding);
     });

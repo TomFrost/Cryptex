@@ -48,13 +48,23 @@ describe('AES256 Algorithm', () => {
       enc[enc.length - 1].should.equal('=');
     });
   });
-  it('results in the same string after encrypt/decrypt', () => {
+  it('results in the same short string after encrypt/decrypt', () => {
     return algo.encrypt(key, 'bar')
       .then((enc) => algo.decrypt(key, enc))
       .then((dec) => {
         should.exist(dec);
         dec.should.be.a.string;
         dec.should.equal('bar');
+      });
+  });
+  it('results in the same long string after encrypt/decrypt', () => {
+    let str = 'this_is_a_long_string_yep_it_sure_is_golly_gee';
+    return algo.encrypt(key, str)
+      .then((enc) => algo.decrypt(key, enc))
+      .then((dec) => {
+        should.exist(dec);
+        dec.should.be.a.string;
+        dec.should.equal(str);
       });
   });
   it('does not produce the same encrypted string twice', () => {
