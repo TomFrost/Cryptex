@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Development]
 Nothing yet!
 
+## [v0.4.1] - 2015-10-27
+### Fixed
+- Babel doesn't transpile String.prototype.includes, breaking 0.12 compatibility.
+This has been corrected.
+
 ## [v0.4.0] - 2015-10-27
 ### Added
 - Optional flag for getSecret().
@@ -47,7 +52,8 @@ secret.
 ### Added
 - Initial release
 
-[Development]: https://github.com/TechnologyAdvice/Cryptex/compare/0.4.0...HEAD
+[Development]: https://github.com/TechnologyAdvice/Cryptex/compare/0.4.1...HEAD
+[v0.4.1]: https://github.com/TechnologyAdvice/Cryptex/compare/0.4.0...0.4.1
 [v0.4.0]: https://github.com/TechnologyAdvice/Cryptex/compare/0.3.1...0.4.0
 [v0.3.1]: https://github.com/TechnologyAdvice/Cryptex/compare/0.3.0...0.3.1
 [v0.3.0]: https://github.com/TechnologyAdvice/Cryptex/compare/0.2.2...0.3.0
