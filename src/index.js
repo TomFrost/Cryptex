@@ -153,7 +153,7 @@ class Cryptex {
   }
 
   static _require(dir, module) {
-    if (module.includes(path.sep)) {
+    if (module.indexOf(path.sep) >= 0) {
       throw new Error(`Invalid module name: "${module}"`);
     }
     const reqPath = path.join(__dirname, dir, module);
