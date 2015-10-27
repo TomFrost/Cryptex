@@ -1,6 +1,6 @@
 {
   "name": "cryptex",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Secure secret storage and cryptographic key retrieval for Node.js",
   "main": "build/index.js",
   "bin": "./build/cli.js",
