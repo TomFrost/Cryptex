@@ -127,12 +127,19 @@ describe('Cryptex Class', () => {
       process.env.CRYPTEX_SECRET_FOO = fooEnc;
       return cryptex.getSecret('foo').should.be.rejected;
     });
-    it('resolves null on missing secrets', () => {
+    it('rejects on missing required secrets', () => {
       process.env.CRYPTEX_KEYSOURCE = 'plaintext';
       process.env.CRYPTEX_KEYSOURCEENCODING = 'base64';
       process.env.CRYPTEX_KEYSOURCE_PLAINTEXT_KEY = key;
       const cryptex = new Cryptex({config: {}});
-      return cryptex.getSecret('foo').should.eventually.be.null;
+      return cryptex.getSecret('foo').should.be.rejected;
+    });
+    it('resolves null on missing optional secrets', () => {
+      process.env.CRYPTEX_KEYSOURCE = 'plaintext';
+      process.env.CRYPTEX_KEYSOURCEENCODING = 'base64';
+      process.env.CRYPTEX_KEYSOURCE_PLAINTEXT_KEY = key;
+      const cryptex = new Cryptex({config: {}});
+      return cryptex.getSecret('foo', true).should.eventually.be.null;
     });
     it('throws on non-json config', () => {
       process.env.CRYPTEX_FILE = '../somefile.js';

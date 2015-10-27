@@ -226,9 +226,10 @@ Decrypts the given data and passes it back as utf8. If your string is binary dat
 as base64 or hex, just pass `base64` or `hex` for the encoding. The encoding is ignored
 if a Buffer is passed in.
 
-##### cryptex.getSecret(secret: string): Promise\<string\>|_null_
+##### cryptex.getSecret(secret: string, optional = false): Promise\<string\>|_null_
 Gets a Promise that resolves to a pre-saved secret, decrypted. See step 5 above. If no
-secret of the given name was found, this function resolves with _null_.
+secret of the given name was found, this function with reject by default. To have it
+resolve with _null_ instead, set `optional` to true.
 
 ##### cryptex.update(opts = {})
 Updates the cryptex instance with new configuration. Available options are:

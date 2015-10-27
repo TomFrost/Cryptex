@@ -2,7 +2,11 @@
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Development]
-Nothing yet!
+### Added
+- Optional flag for getSecret().
+
+### Changed
+- getSecret() treats secrets as required by default, and rejects if one isn't found.
 
 ## [v0.3.1] - 2015-10-27
 ### Fixed

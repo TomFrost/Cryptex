@@ -56,11 +56,12 @@ class Cryptex {
     });
   }
 
-  getSecret(secret) {
+  getSecret(secret, optional = false) {
     const secretUp = secret.toUpperCase();
     const enc = process.env[`CRYPTEX_SECRET_${secretUp}`] || this._config.secrets[secret];
     if (!enc) {
-      return Promise.resolve(null);
+      return optional ? Promise.resolve(null) :
+        Promise.reject(new Error(`Secret "${secret}" not found`));
     }
     return this.decrypt(enc, this._config.secretEncoding);
   }
