@@ -5,7 +5,9 @@
 
 import cryptex from './index.js';
 import pkg from '../package.json';
+import UserError from './lib/UserError';
 import yargs from 'yargs';
+
 const argv = yargs
   .usage('Usage: $0 [options] <command> <text>')
   .command('encrypt', 'Encrypt the given plaintext string')
@@ -36,6 +38,10 @@ function run() {
 }
 
 run().then(() => process.exit(0)).catch((err) => {
-  process.stderr.write('Uh-oh, we have a problem:\n' + err.stack);
+  if (err instanceof UserError) {
+    process.stderr.write(`[ERROR] ${err.message}\n`);
+  } else {
+    process.stderr.write(`Uh-oh, we have a problem:\n${err.stack}\n`);
+  }
   process.exit(1);
 });

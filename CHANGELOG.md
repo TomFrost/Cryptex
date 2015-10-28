@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Cryptex now rejects on encrypt/decrypt/getSecret when a keySource isn't explicitly
 set. This provides far better error messaging when Cryptex isn't properly configured.
+- The CLI now produces shockingly better error messages.
 
 ## [v0.4.1] - 2015-10-27
 ### Fixed

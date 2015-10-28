@@ -4,6 +4,7 @@
 
 import _ from 'lodash';
 import path from 'path';
+import UserError from './lib/UserError';
 
 const defaultFilename = 'cryptex.json';
 const defaultEnv = 'default';
@@ -61,7 +62,7 @@ class Cryptex {
     const enc = process.env[`CRYPTEX_SECRET_${secretUp}`] || this._config.secrets[secret];
     if (!enc) {
       return optional ? Promise.resolve(null) :
-        Promise.reject(new Error(`Secret "${secret}" not found`));
+        Promise.reject(new UserError(`Secret "${secret}" not found`));
     }
     return this.decrypt(enc, this._config.secretEncoding);
   }
@@ -116,13 +117,13 @@ class Cryptex {
       return Promise.resolve(this._key);
     }
     if (!this._config.keySource) {
-      return Promise.reject(new Error('KeySource not found. Is Cryptex properly configured?'));
+      return Promise.reject(new UserError('KeySource not found. Is Cryptex properly configured?'));
     }
     const sourceGetKey = Cryptex._require('keySources', this._config.keySource);
     const toBuffer = Cryptex._require('encodings', this._config.keySourceEncoding);
     return sourceGetKey(this._config.keySourceOpts).then((keyData) => {
       if (keyData && !Buffer.isBuffer(keyData) && this._config.keySourceEncoding === 'binary') {
-        throw new Error("Please specify a key encoding. Looks like it's not a binary buffer!");
+        throw new UserError("Please specify a key encoding. Looks like it's not a binary buffer!");
       }
       const key = keyData && toBuffer(keyData);
       if (this._opts.cacheKey) {
@@ -137,7 +138,7 @@ class Cryptex {
 
   _loadEnvFromFile() {
     if (this._opts.file.substr(-5) !== '.json') {
-      throw new Error('Cryptex files must end in .json');
+      throw new UserError('Cryptex files must end in .json');
     }
     try {
       this._confFile = _.clone(require(this._opts.file), true);
@@ -157,7 +158,7 @@ class Cryptex {
 
   static _require(dir, module) {
     if (module.indexOf(path.sep) >= 0) {
-      throw new Error(`Invalid module name: "${module}"`);
+      throw new UserError(`Invalid module name: "${module}"`);
     }
     const reqPath = path.join(__dirname, dir, module);
     if (!Cryptex._requires[reqPath]) {
