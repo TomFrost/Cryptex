@@ -107,6 +107,41 @@ describe('Cryptex Class', () => {
       process.env.CRYPTEX_SECRET_FOO = fooEnc;
       return cryptex.getSecret('foo').should.eventually.equal('foo');
     });
+    it('retrieves multiple secrets', () => {
+      const secrets = {
+        foo: 'foo',
+        bar: 'bar',
+        baz: 'baz'
+      };
+      const cryptex = new Cryptex({
+        config: {
+          keySource: 'none',
+          algorithm: 'plaintext',
+          secretEncoding: 'utf8',
+          secrets
+        }
+      });
+      return cryptex.getSecrets(['foo', 'bar', 'baz']).should.eventually.eql(secrets);
+    });
+    it('retrieves multiple secrets with null for any not found', () => {
+      const secrets = {
+        foo: 'foo',
+        bar: 'bar'
+      };
+      const cryptex = new Cryptex({
+        config: {
+          keySource: 'none',
+          algorithm: 'plaintext',
+          secretEncoding: 'utf8',
+          secrets
+        }
+      });
+      return cryptex.getSecrets(['foo', 'bar', 'baz'], true).should.eventually.eql({
+        foo: 'foo',
+        bar: 'bar',
+        baz: null
+      });
+    });
   });
   describe('Failure cases', () => {
     it('prevents module path injections', () => {
@@ -169,6 +204,21 @@ describe('Cryptex Class', () => {
         }
       });
       return cryptex.getSecret('foo').should.be.rejected;
+    });
+    it('retrieves multiple secrets and rejects for any not found', () => {
+      const secrets = {
+        foo: 'foo',
+        bar: 'bar'
+      };
+      const cryptex = new Cryptex({
+        config: {
+          keySource: 'none',
+          algorithm: 'plaintext',
+          secretEncoding: 'utf8',
+          secrets
+        }
+      });
+      return cryptex.getSecrets(['foo', 'bar', 'baz']).should.be.rejected;
     });
   });
   describe('Key caching', () => {

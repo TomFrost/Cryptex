@@ -67,6 +67,26 @@ class Cryptex {
     return this.decrypt(enc, this._config.secretEncoding);
   }
 
+  getSecrets(secrets, optional = false) {
+    const vals = {};
+    let promiseChain = Promise.resolve();
+    let prev;
+    secrets.forEach((secret) => {
+      let key = prev;
+      prev = secret;
+      promiseChain = promiseChain.then((val) => {
+        if (key) {
+          vals[key] = val;
+        }
+        return this.getSecret(secret, optional);
+      });
+    });
+    return promiseChain.then((val) => {
+      vals[prev] = val;
+      return vals;
+    });
+  }
+
   /**
    * Updates this Cryptex instance with new configuration. Note that this will cause this instance to clear all
    * caches, reload any configuration files, and apply any changes to environment variables since it was last

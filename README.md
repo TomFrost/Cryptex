@@ -232,6 +232,14 @@ Gets a Promise that resolves to a pre-saved secret, decrypted. See step 5 above.
 secret of the given name was found, this function with reject by default. To have it
 resolve with _null_ instead, set `optional` to true.
 
+##### cryptex.getSecrets(secrets: Array\<string\>, optional = false): Promise\<Object\>
+Gets a Promise that resolves to an object mapping the requested secret names to their
+decrypted values. Unlike calling `getSecret` multiple times, this function will wait
+for the key to be cached (if enabled) from decrypting the first secret before decrypting
+the rest. This provides a faster and more efficient delivery of multiple secrets.  If
+`optional` is set to `true`, any requested secrets not found will have their values in
+the object map set to `null`. Otherwise, the returned Promise will be rejected.
+
 ##### cryptex.update(opts = {})
 Updates the cryptex instance with new configuration. Available options are:
 

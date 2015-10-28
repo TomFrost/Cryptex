@@ -2,6 +2,9 @@
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Development]
+### Added
+- getSecrets() method for more efficient secret retrieval batching
+
 ### Changed
 - Cryptex now rejects on encrypt/decrypt/getSecret when a keySource isn't explicitly
 set. This provides far better error messaging when Cryptex isn't properly configured.
