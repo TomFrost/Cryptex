@@ -96,7 +96,7 @@ class Cryptex {
     this._config.secrets = this._config.secrets || {};
     this._config.secretEncoding = process.env.CRYPTEX_SECRETENCODING || this._config.secretEncoding || 'base64';
     this._config.algorithm = process.env.CRYPTEX_ALGORITHM || this._config.algorithm || 'aes256';
-    this._config.keySource = process.env.CRYPTEX_KEYSOURCE || this._config.keySource || 'none';
+    this._config.keySource = process.env.CRYPTEX_KEYSOURCE || this._config.keySource;
     this._config.keySourceEncoding = process.env.CRYPTEX_KEYSOURCEENCODING || this._config.keySourceEncoding ||
       'binary';
     delete this._key;
@@ -114,6 +114,9 @@ class Cryptex {
   _getKey() {
     if (this._key) {
       return Promise.resolve(this._key);
+    }
+    if (!this._config.keySource) {
+      return Promise.reject(new Error('KeySource not found. Is Cryptex properly configured?'));
     }
     const sourceGetKey = Cryptex._require('keySources', this._config.keySource);
     const toBuffer = Cryptex._require('encodings', this._config.keySourceEncoding);

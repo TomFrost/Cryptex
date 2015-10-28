@@ -160,6 +160,16 @@ describe('Cryptex Class', () => {
       const cryptex = new Cryptex();
       should.exist(cryptex);
     });
+    it('rejects when no keySource is set', () => {
+      const cryptex = new Cryptex({
+        config: {
+          algorithm: 'plaintext',
+          secretEncoding: 'utf8',
+          secrets: {foo: 'bar'}
+        }
+      });
+      return cryptex.getSecret('foo').should.be.rejected;
+    });
   });
   describe('Key caching', () => {
     let clock;

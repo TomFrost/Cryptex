@@ -41,6 +41,7 @@ environment variable is set to. The file looks like this:
     }
   },
   "development": {
+    "keySource": "none",
     "algorithm": "plaintext",
     "secretEncoding": "utf8",
     "secrets": {
