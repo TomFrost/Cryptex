@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Development]
 Nothing yet!
 
+## [v0.6.0] - 2015-10-28
+### Added
+- Cryptex CLI now understands getSecret command, and makes Cryptex useful in
+non-Node.js projects!
+
 ## [v0.5.0] - 2015-10-28
 ### Added
 - getSecrets() method for more efficient secret retrieval batching
@@ -61,7 +66,8 @@ secret.
 ### Added
 - Initial release
 
-[Development]: https://github.com/TechnologyAdvice/Cryptex/compare/0.5.0...HEAD
+[Development]: https://github.com/TechnologyAdvice/Cryptex/compare/0.6.0...HEAD
+[v0.6.0]: https://github.com/TechnologyAdvice/Cryptex/compare/0.5.0...0.6.0
 [v0.5.0]: https://github.com/TechnologyAdvice/Cryptex/compare/0.4.1...0.5.0
 [v0.4.1]: https://github.com/TechnologyAdvice/Cryptex/compare/0.4.0...0.4.1
 [v0.4.0]: https://github.com/TechnologyAdvice/Cryptex/compare/0.3.1...0.4.0
