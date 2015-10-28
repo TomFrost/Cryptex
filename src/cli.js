@@ -12,6 +12,7 @@ const argv = yargs
   .usage('Usage: $0 [options] <command> <text>')
   .command('encrypt', 'Encrypt the given plaintext string')
   .command('decrypt', 'Decrypt the given base64 string')
+  .command('getSecret', 'Decrypt the given stored secret')
   .demand(2)
   .option('e', {
     alias: 'environment',
@@ -27,11 +28,14 @@ const output = console.log;
 
 function run() {
   cryptex.update({ env: argv.e });
-  switch (argv._[0]) {
+  const command = argv._[0].toLowerCase();
+  switch (command) {
   case 'encrypt':
     return cryptex.encrypt(argv._[1]).then(output);
   case 'decrypt':
     return cryptex.decrypt(argv._[1]).then(output);
+  case 'getsecret':
+    return cryptex.getSecret(argv._[1]).then(output);
   default:
     return Promise.resolve().then(yargs.showHelp());
   }
