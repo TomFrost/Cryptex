@@ -171,7 +171,7 @@ class Cryptex {
   static _bufferize(data, encoding) {
     let buf = data;
     if (!Buffer.isBuffer(buf)) {
-      buf = new Buffer(data, encoding);
+      buf = new Buffer(data.toString(), encoding);
     }
     return buf;
   }
