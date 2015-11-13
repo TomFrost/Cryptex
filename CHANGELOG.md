@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Development]
 Nothing yet!
 
+## [v0.6.1] - 2015-11-13
+### Fixed
+- Encrypting numbers no longer results in a huge encrypted RAM block! Numbers are now
+treated as strings.
+
 ## [v0.6.0] - 2015-10-28
 ### Added
 - Cryptex CLI now understands getSecret command, and makes Cryptex useful in
@@ -66,7 +71,8 @@ secret.
 ### Added
 - Initial release
 
-[Development]: https://github.com/TechnologyAdvice/Cryptex/compare/0.6.0...HEAD
+[Development]: https://github.com/TechnologyAdvice/Cryptex/compare/0.6.1...HEAD
+[v0.6.1]: https://github.com/TechnologyAdvice/Cryptex/compare/0.6.0...0.6.1
 [v0.6.0]: https://github.com/TechnologyAdvice/Cryptex/compare/0.5.0...0.6.0
 [v0.5.0]: https://github.com/TechnologyAdvice/Cryptex/compare/0.4.1...0.5.0
 [v0.4.1]: https://github.com/TechnologyAdvice/Cryptex/compare/0.4.0...0.4.1
