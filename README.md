@@ -248,7 +248,7 @@ Updates the cryptex instance with new configuration. Available options are:
 `cryptex.json` in the app process's current working directory.
 
 **environment:** The environment to select from the specified json file. Cryptex will
-attempt to pull an environment in this order: This value, the `CRYPTEX_ENVIRONMENT` env
+attempt to pull an environment in this order: This value, the `CRYPTEX_ENV` env
 var, the `NODE_ENV` env var, or default to `default` if all else has failed.
 
 **cacheKey:** Boolean true to cache the key returned by the keySource in RAM, false to
