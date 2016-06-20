@@ -2,7 +2,7 @@
     <img src="https://promises-aplus.github.io/promises-spec/assets/logo-small.png"
          align="right" valign="top" alt="Promises/A+ logo" />
 </a>
-# Cryptex [![Build Status](https://travis-ci.org/TechnologyAdvice/Cryptex.svg?branch=master)](https://travis-ci.org/TechnologyAdvice/Cryptex) [![Code Climate](https://codeclimate.com/github/TechnologyAdvice/Cryptex/badges/gpa.svg)](https://codeclimate.com/github/TechnologyAdvice/Cryptex) [![Test Coverage](https://codeclimate.com/github/TechnologyAdvice/Cryptex/badges/coverage.svg)](https://codeclimate.com/github/TechnologyAdvice/Cryptex/coverage) 
+# Cryptex [![Build Status](https://travis-ci.org/TechnologyAdvice/Cryptex.svg?branch=master)](https://travis-ci.org/TechnologyAdvice/Cryptex) [![Code Climate](https://codeclimate.com/github/TechnologyAdvice/Cryptex/badges/gpa.svg)](https://codeclimate.com/github/TechnologyAdvice/Cryptex) [![Test Coverage](https://codeclimate.com/github/TechnologyAdvice/Cryptex/badges/coverage.svg)](https://codeclimate.com/github/TechnologyAdvice/Cryptex/coverage)
 Secure secret storage and cryptographic key retrieval for Node.js
 
 ```javascript
@@ -247,7 +247,7 @@ Updates the cryptex instance with new configuration. Available options are:
 `$NODE_ENV`) to configuration objects. Can also be set in `CRYPTEX_FILE`. Defaults to
 `cryptex.json` in the app process's current working directory.
 
-**environment:** The environment to select from the specified json file. Cryptex will
+**env:** The environment to select from the specified json file. Cryptex will
 attempt to pull an environment in this order: This value, the `CRYPTEX_ENV` env
 var, the `NODE_ENV` env var, or default to `default` if all else has failed.
 
