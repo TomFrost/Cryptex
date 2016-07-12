@@ -31,7 +31,8 @@ class Cryptex {
    *    optionally encrypted keys to initialize Crypto with. If specified, no file load will be attempted. To prevent
    *    a file load without specifying a config, pass an empty object here.
    */
-  constructor(opts = {}) {
+  constructor(opts) {
+    opts = opts || {}
     this._opts = {
       file: process.env.CRYPTEX_FILE || path.join(process.cwd(), defaultFilename),
       env: process.env.CRYPTEX_ENV || process.env.NODE_ENV || defaultEnv,
@@ -41,7 +42,8 @@ class Cryptex {
     this.update(opts)
   }
 
-  decrypt(data, encoding = 'base64') {
+  decrypt(data, encoding) {
+    encoding = encoding || 'base64'
     const enc = Cryptex._bufferize(data, encoding)
     return Promise.resolve().then(() => {
       return this._getKey()
@@ -50,7 +52,8 @@ class Cryptex {
     })
   }
 
-  encrypt(data, encoding = 'utf8') {
+  encrypt(data, encoding) {
+    encoding = encoding || 'utf8'
     const dec = Cryptex._bufferize(data, encoding)
     return Promise.resolve().then(() => {
       return this._getKey()
@@ -59,7 +62,7 @@ class Cryptex {
     })
   }
 
-  getSecret(secret, optional = false) {
+  getSecret(secret, optional) {
     const secretUp = secret.toUpperCase()
     const enc = process.env[`CRYPTEX_SECRET_${secretUp}`] || this._config.secrets[secret]
     if (!enc) {
@@ -69,7 +72,7 @@ class Cryptex {
     return this.decrypt(enc, this._config.secretEncoding)
   }
 
-  getSecrets(secrets, optional = false) {
+  getSecrets(secrets, optional) {
     const vals = {}
     let promiseChain = Promise.resolve()
     let prev
@@ -109,8 +112,8 @@ class Cryptex {
    *    optionally encrypted keys to initialize Crypto with. If specified, no file load will be attempted. To prevent
    *    a file load without specifying a config, pass an empty object here.
    */
-  update(opts = {}) {
-    _.assign(this._opts, opts)
+  update(opts) {
+    _.assign(this._opts, opts || {})
     if (this._opts.config) {
       this._config = this._opts.config
     } else {
