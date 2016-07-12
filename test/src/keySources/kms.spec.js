@@ -1,23 +1,25 @@
 /*
- * Copyright (c) 2015 TechnologyAdvice
+ * Copyright (c) 2015-1016 TechnologyAdvice
  */
 
-import AWS from 'aws-sdk';
-import getKey from 'src/keySources/kms';
-import nock from 'nock';
+'use strict'
 
-const dataKey = 'foo=';
-const plainKey = 'WJcfREHOMttStwb1927PQwpDJgOgRyVoVMODQxx3pK4=';
+const AWS = require('aws-sdk')
+const getKey = require('src/keySources/kms')
+const nock = require('nock')
+
+const dataKey = 'foo='
+const plainKey = 'WJcfREHOMttStwb1927PQwpDJgOgRyVoVMODQxx3pK4='
 
 describe('KMS Source', () => {
-  afterEach(() => nock.cleanAll());
+  afterEach(() => nock.cleanAll())
   beforeEach(() => {
     AWS.config.update({
       accessKeyId: '1234567890',
       secretAccessKey: '1234567890',
       region: 'us-east-1'
-    });
-  });
+    })
+  })
   it('resolves with the provided key', () => {
     const mock = nock('https://kms.us-east-1.amazonaws.com:443')
       .post('/', { CiphertextBlob: dataKey })
@@ -32,15 +34,15 @@ describe('KMS Source', () => {
         'content-length': '146',
         connection: 'close',
         'x-amzn-requestid': '12345678-1234-1234-1234-123456789012'
-      });
+      })
     return getKey({ dataKey }).then((key) => {
-      should.exist(key);
-      key.should.be.instanceOf(Buffer);
-      key.length.should.be.greaterThan(0);
-      key.toString('base64').should.equal(plainKey);
-      mock.done();
-    });
-  });
+      should.exist(key)
+      key.should.be.instanceOf(Buffer)
+      key.length.should.be.greaterThan(0)
+      key.toString('base64').should.equal(plainKey)
+      mock.done()
+    })
+  })
   it('allows region to be specified', () => {
     const mock = nock('https://kms.us-west-1.amazonaws.com:443')
       .post('/', { CiphertextBlob: dataKey })
@@ -55,19 +57,19 @@ describe('KMS Source', () => {
         'content-length': '146',
         connection: 'close',
         'x-amzn-requestid': '12345678-1234-1234-1234-123456789012'
-      });
+      })
     return getKey({ dataKey, region: 'us-west-1' }).then((key) => {
-      should.exist(key);
-      mock.done();
-    });
-  });
+      should.exist(key)
+      mock.done()
+    })
+  })
   it('rejects on bad HTTP response', () => {
     nock('https://kms.us-east-1.amazonaws.com:443')
       .post('/', { CiphertextBlob: dataKey })
-      .reply(503);
-    return getKey({ dataKey }).should.be.rejected;
-  });
+      .reply(503)
+    return getKey({ dataKey }).should.be.rejected
+  })
   it('rejects when option "dataKey" is missing', () => {
-    return getKey().should.be.rejected;
-  });
-});
+    return getKey().should.be.rejected
+  })
+})

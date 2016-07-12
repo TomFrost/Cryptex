@@ -1,13 +1,15 @@
 /*
- * Copyright (c) 2015 TechnologyAdvice
+ * Copyright (c) 2015-1016 TechnologyAdvice
  */
 
-import _ from 'lodash';
-import path from 'path';
-import UserError from './lib/UserError';
+'use strict'
 
-const defaultFilename = 'cryptex.json';
-const defaultEnv = 'default';
+const _ = require('lodash')
+const path = require('path')
+const UserError = require('./lib/UserError')
+
+const defaultFilename = 'cryptex.json'
+const defaultEnv = 'default'
 
 class Cryptex {
 
@@ -29,62 +31,65 @@ class Cryptex {
    *    optionally encrypted keys to initialize Crypto with. If specified, no file load will be attempted. To prevent
    *    a file load without specifying a config, pass an empty object here.
    */
-  constructor(opts = {}) {
+  constructor(opts) {
+    opts = opts || {}
     this._opts = {
       file: process.env.CRYPTEX_FILE || path.join(process.cwd(), defaultFilename),
       env: process.env.CRYPTEX_ENV || process.env.NODE_ENV || defaultEnv,
       cacheKey: process.env.CRYPTEX_CACHEKEY ? process.env.CRYPTEX_CACHEKEY === 'true' : true,
       cacheTimeout: process.env.CRYPTEX_CACHETIMEOUT ? parseInt(process.env.CRYPTEX_CACHETIMEOUT, 10) : 5000
-    };
-    this.update(opts);
+    }
+    this.update(opts)
   }
 
-  decrypt(data, encoding = 'base64') {
-    const enc = Cryptex._bufferize(data, encoding);
+  decrypt(data, encoding) {
+    encoding = encoding || 'base64'
+    const enc = Cryptex._bufferize(data, encoding)
     return Promise.resolve().then(() => {
-      return this._getKey();
+      return this._getKey()
     }).then((key) => {
-      return this._getAlgo().decrypt(key, enc);
-    });
+      return this._getAlgo().decrypt(key, enc)
+    })
   }
 
-  encrypt(data, encoding = 'utf8') {
-    const dec = Cryptex._bufferize(data, encoding);
+  encrypt(data, encoding) {
+    encoding = encoding || 'utf8'
+    const dec = Cryptex._bufferize(data, encoding)
     return Promise.resolve().then(() => {
-      return this._getKey();
+      return this._getKey()
     }).then((key) => {
-      return this._getAlgo().encrypt(key, dec);
-    });
+      return this._getAlgo().encrypt(key, dec)
+    })
   }
 
-  getSecret(secret, optional = false) {
-    const secretUp = secret.toUpperCase();
-    const enc = process.env[`CRYPTEX_SECRET_${secretUp}`] || this._config.secrets[secret];
+  getSecret(secret, optional) {
+    const secretUp = secret.toUpperCase()
+    const enc = process.env[`CRYPTEX_SECRET_${secretUp}`] || this._config.secrets[secret]
     if (!enc) {
       return optional ? Promise.resolve(null) :
-        Promise.reject(new UserError(`Secret "${secret}" not found`));
+        Promise.reject(new UserError(`Secret "${secret}" not found`))
     }
-    return this.decrypt(enc, this._config.secretEncoding);
+    return this.decrypt(enc, this._config.secretEncoding)
   }
 
-  getSecrets(secrets, optional = false) {
-    const vals = {};
-    let promiseChain = Promise.resolve();
-    let prev;
+  getSecrets(secrets, optional) {
+    const vals = {}
+    let promiseChain = Promise.resolve()
+    let prev
     secrets.forEach((secret) => {
-      let key = prev;
-      prev = secret;
+      let key = prev
+      prev = secret
       promiseChain = promiseChain.then((val) => {
         if (key) {
-          vals[key] = val;
+          vals[key] = val
         }
-        return this.getSecret(secret, optional);
-      });
-    });
+        return this.getSecret(secret, optional)
+      })
+    })
     return promiseChain.then((val) => {
-      vals[prev] = val;
-      return vals;
-    });
+      vals[prev] = val
+      return vals
+    })
   }
 
   /**
@@ -107,88 +112,88 @@ class Cryptex {
    *    optionally encrypted keys to initialize Crypto with. If specified, no file load will be attempted. To prevent
    *    a file load without specifying a config, pass an empty object here.
    */
-  update(opts = {}) {
-    _.assign(this._opts, opts);
+  update(opts) {
+    _.assign(this._opts, opts || {})
     if (this._opts.config) {
-      this._config = this._opts.config;
+      this._config = this._opts.config
     } else {
-      this._config = this._loadEnvFromFile();
+      this._config = this._loadEnvFromFile()
     }
-    this._config.secrets = this._config.secrets || {};
-    this._config.secretEncoding = process.env.CRYPTEX_SECRETENCODING || this._config.secretEncoding || 'base64';
-    this._config.algorithm = process.env.CRYPTEX_ALGORITHM || this._config.algorithm || 'aes256';
-    this._config.keySource = process.env.CRYPTEX_KEYSOURCE || this._config.keySource;
+    this._config.secrets = this._config.secrets || {}
+    this._config.secretEncoding = process.env.CRYPTEX_SECRETENCODING || this._config.secretEncoding || 'base64'
+    this._config.algorithm = process.env.CRYPTEX_ALGORITHM || this._config.algorithm || 'aes256'
+    this._config.keySource = process.env.CRYPTEX_KEYSOURCE || this._config.keySource
     this._config.keySourceEncoding = process.env.CRYPTEX_KEYSOURCEENCODING || this._config.keySourceEncoding ||
-      'binary';
-    delete this._key;
-    delete this._algoInst;
+      'binary'
+    delete this._key
+    delete this._algoInst
   }
 
   _getAlgo() {
     if (!this._algoInst) {
-      const AlgoClass = Cryptex._require('algorithms', this._config.algorithm);
-      this._algoInst = new AlgoClass(this._config.algorithmOpts);
+      const AlgoClass = Cryptex._require('algorithms', this._config.algorithm)
+      this._algoInst = new AlgoClass(this._config.algorithmOpts)
     }
-    return this._algoInst;
+    return this._algoInst
   }
 
   _getKey() {
     if (this._key) {
-      return Promise.resolve(this._key);
+      return Promise.resolve(this._key)
     }
     if (!this._config.keySource) {
-      return Promise.reject(new UserError('KeySource not found. Is Cryptex properly configured?'));
+      return Promise.reject(new UserError('KeySource not found. Is Cryptex properly configured?'))
     }
-    const sourceGetKey = Cryptex._require('keySources', this._config.keySource);
-    const toBuffer = Cryptex._require('encodings', this._config.keySourceEncoding);
+    const sourceGetKey = Cryptex._require('keySources', this._config.keySource)
+    const toBuffer = Cryptex._require('encodings', this._config.keySourceEncoding)
     return sourceGetKey(this._config.keySourceOpts).then((keyData) => {
       if (keyData && !Buffer.isBuffer(keyData) && this._config.keySourceEncoding === 'binary') {
-        throw new UserError("Please specify a key encoding. Looks like it's not a binary buffer!");
+        throw new UserError("Please specify a key encoding. Looks like it's not a binary buffer!")
       }
-      const key = keyData && toBuffer(keyData);
+      const key = keyData && toBuffer(keyData)
       if (this._opts.cacheKey) {
-        this._key = key;
+        this._key = key
         if (this._opts.cacheTimeout) {
-          setTimeout(() => delete this._key, this._opts.cacheTimeout);
+          setTimeout(() => delete this._key, this._opts.cacheTimeout)
         }
       }
-      return key;
-    });
+      return key
+    })
   }
 
   _loadEnvFromFile() {
     if (this._opts.file.substr(-5) !== '.json') {
-      throw new UserError('Cryptex files must end in .json');
+      throw new UserError('Cryptex files must end in .json')
     }
     try {
-      this._confFile = _.clone(require(this._opts.file), true);
+      this._confFile = _.clone(require(this._opts.file), true)
     } catch (e) {
-      this._confFile = {};
+      this._confFile = {}
     }
-    return this._confFile[this._opts.env] || this._confFile[defaultEnv] || {};
+    return this._confFile[this._opts.env] || this._confFile[defaultEnv] || {}
   }
 
   static _bufferize(data, encoding) {
-    let buf = data;
+    let buf = data
     if (!Buffer.isBuffer(buf)) {
-      buf = new Buffer(data.toString(), encoding);
+      buf = new Buffer(data.toString(), encoding)
     }
-    return buf;
+    return buf
   }
 
   static _require(dir, module) {
     if (module.indexOf(path.sep) >= 0) {
-      throw new UserError(`Invalid module name: "${module}"`);
+      throw new UserError(`Invalid module name: "${module}"`)
     }
-    const reqPath = path.join(__dirname, dir, module);
+    const reqPath = path.join(__dirname, dir, module)
     if (!Cryptex._requires[reqPath]) {
-      Cryptex._requires[reqPath] = require(reqPath);
+      Cryptex._requires[reqPath] = require(reqPath)
     }
-    return Cryptex._requires[reqPath];
+    return Cryptex._requires[reqPath]
   }
 }
-Cryptex._requires = {};
+Cryptex._requires = {}
 
-const cryptex = new Cryptex();
-cryptex.Cryptex = Cryptex;
-export default cryptex;
+const cryptex = new Cryptex()
+cryptex.Cryptex = Cryptex
+module.exports = cryptex

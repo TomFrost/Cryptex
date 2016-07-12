@@ -1,7 +1,9 @@
 /*
- * Copyright (c) 2015 TechnologyAdvice
+ * Copyright (c) 2015-1016 TechnologyAdvice
  */
 
-export default function toBuffer(buf) {
-  return buf;
+'use strict'
+
+module.exports = (buf) => {
+  return buf
 }

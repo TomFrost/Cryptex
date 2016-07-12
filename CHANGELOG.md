@@ -2,7 +2,8 @@
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Development]
-Nothing yet!
+### Changed
+- Babel has been removed. Cryptex now requires Node version 4 or higher.
 
 ## [v0.6.1] - 2015-11-13
 ### Fixed

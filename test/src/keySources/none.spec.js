@@ -1,13 +1,15 @@
 /*
- * Copyright (c) 2015 TechnologyAdvice
+ * Copyright (c) 2015-1016 TechnologyAdvice
  */
 
-import getKey from 'src/keySources/none';
+'use strict'
+
+const getKey = require('src/keySources/none')
 
 describe('None Source', () => {
   it('resolves with a null key', () => {
     return getKey().then((key) => {
-      should.not.exist(key);
-    });
-  });
-});
+      should.not.exist(key)
+    })
+  })
+})

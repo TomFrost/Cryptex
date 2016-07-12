@@ -1,9 +1,11 @@
 /*
- * Copyright (c) 2015 TechnologyAdvice
+ * Copyright (c) 2015-1016 TechnologyAdvice
  */
 
-export default function toBuffer(data) {
-  let hexStr = Buffer.isBuffer(data) ? data.toString() : data;
-  hexStr = hexStr.toLowerCase();
-  return new Buffer(hexStr, 'hex');
+'use strict'
+
+module.exports = (data) => {
+  let hexStr = Buffer.isBuffer(data) ? data.toString() : data
+  hexStr = hexStr.toLowerCase()
+  return new Buffer(hexStr, 'hex')
 }
