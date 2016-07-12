@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 /*
- * Copyright (c) 2015 TechnologyAdvice
+ * Copyright (c) 2015-1016 TechnologyAdvice
  */
 
-import cryptex from './index.js';
-import pkg from '../package.json';
-import UserError from './lib/UserError';
-import yargs from 'yargs';
+'use strict'
+
+const cryptex = require('./index.js')
+const pkg = require('../package.json')
+const UserError = require('./lib/UserError')
+const yargs = require('yargs')
 
 const argv = yargs
   .usage('Usage: $0 [options] <command> <text>')
@@ -21,31 +23,31 @@ const argv = yargs
   .nargs('e', 1)
   .version(pkg.version)
   .help('help')
-  .argv;
+  .argv
 
 /* eslint no-console:0 */
-const output = console.log;
+const output = console.log
 
 function run() {
-  cryptex.update({ env: argv.e });
-  const command = argv._[0].toLowerCase();
+  cryptex.update({ env: argv.e })
+  const command = argv._[0].toLowerCase()
   switch (command) {
   case 'encrypt':
-    return cryptex.encrypt(argv._[1]).then(output);
+    return cryptex.encrypt(argv._[1]).then(output)
   case 'decrypt':
-    return cryptex.decrypt(argv._[1]).then(output);
+    return cryptex.decrypt(argv._[1]).then(output)
   case 'getsecret':
-    return cryptex.getSecret(argv._[1]).then(output);
+    return cryptex.getSecret(argv._[1]).then(output)
   default:
-    return Promise.resolve().then(yargs.showHelp());
+    return Promise.resolve().then(yargs.showHelp())
   }
 }
 
 run().then(() => process.exit(0)).catch((err) => {
   if (err instanceof UserError) {
-    process.stderr.write(`[ERROR] ${err.message}\n`);
+    process.stderr.write(`[ERROR] ${err.message}\n`)
   } else {
-    process.stderr.write(`Uh-oh, we have a problem:\n${err.stack}\n`);
+    process.stderr.write(`Uh-oh, we have a problem:\n${err.stack}\n`)
   }
-  process.exit(1);
-});
+  process.exit(1)
+})

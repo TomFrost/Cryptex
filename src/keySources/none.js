@@ -1,7 +1,9 @@
 /*
- * Copyright (c) 2015 TechnologyAdvice
+ * Copyright (c) 2015-1016 TechnologyAdvice
  */
 
-export default function getKey() {
-  return Promise.resolve(null);
+'use strict'
+
+module.exports = () => {
+  return Promise.resolve(null)
 }

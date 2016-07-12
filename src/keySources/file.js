@@ -1,22 +1,25 @@
 /*
- * Copyright (c) 2015 TechnologyAdvice
+ * Copyright (c) 2015-1016 TechnologyAdvice
  */
 
-import fs from 'fs';
+'use strict'
 
-export default function getKey(opts = {}) {
-  const path = process.env.CRYPTEX_KEYSOURCE_FILE_PATH || opts.path;
+const fs = require('fs')
+
+module.exports = (opts) => {
+  opts = opts || {}
+  const path = process.env.CRYPTEX_KEYSOURCE_FILE_PATH || opts.path
   return new Promise((resolve, reject) => {
     if (!path) {
-      reject('File: Option "path" is required');
+      reject('File: Option "path" is required')
     } else {
       fs.readFile(path, (err, buf) => {
         if (err) {
-          reject(err);
+          reject(err)
         } else {
-          resolve(buf);
+          resolve(buf)
         }
-      });
+      })
     }
-  });
+  })
 }

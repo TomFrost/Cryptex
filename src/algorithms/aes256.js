@@ -1,11 +1,15 @@
 /*
- * Copyright (c) 2015 TechnologyAdvice
+ * Copyright (c) 2015-1016 TechnologyAdvice
  */
 
-import SymmetricAlgo from '../lib/SymmetricAlgo';
+'use strict'
 
-export default class AES256 extends SymmetricAlgo {
+const SymmetricAlgo = require('../lib/SymmetricAlgo')
+
+class AES256 extends SymmetricAlgo {
   constructor() {
-    super('aes256', 16);
+    super('aes256', 16)
   }
 }
+
+module.exports = AES256

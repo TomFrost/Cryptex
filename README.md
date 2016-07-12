@@ -297,5 +297,5 @@ very much applicable today.  However, by using Amazon KMS, Cryptex, and with car
 review of all installed modules, a secure system in Node.js is possible.
 
 ## License
-All original content is Copyright (c) 2015 TechnologyAdvice, released under
+All original content is Copyright (c) 2015-2016 TechnologyAdvice, released under
 the ultra-permissive ISC license. See LICENSE.txt for details.

@@ -1,13 +1,17 @@
 /*
- * Copyright (c) 2015 TechnologyAdvice
+ * Copyright (c) 2015-1016 TechnologyAdvice
  */
 
-export default class Plaintext {
+'use strict'
+
+class Plaintext {
   decrypt(key, secret) {
-    return secret.toString();
+    return secret.toString()
   }
 
   encrypt(key, secret) {
-    return secret.toString();
+    return secret.toString()
   }
 }
+
+module.exports = Plaintext
