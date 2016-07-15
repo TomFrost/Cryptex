@@ -2,8 +2,15 @@
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Development]
+### Added
+- CLI now has a --file (-f) argument for specifying a non-default json configuration file
+- Cryptex now resolves relative config file paths
+
 ### Changed
 - Babel has been removed. Cryptex now requires Node version 4 or higher.
+
+### Fixed
+- Super-long integers passed in on the CLI for encryption are no longer automatically rounded by Javascript. ([#5](https://github.com/TechnologyAdvice/Cryptex/issues/5)) 
 
 ## [v0.6.1] - 2015-11-13
 ### Fixed

@@ -11,33 +11,42 @@ const UserError = require('./lib/UserError')
 const yargs = require('yargs')
 
 const argv = yargs
-  .usage('Usage: $0 [options] <command> <text>')
-  .command('encrypt', 'Encrypt the given plaintext string')
-  .command('decrypt', 'Decrypt the given base64 string')
-  .command('getSecret', 'Decrypt the given stored secret')
-  .demand(2)
+  .usage('Usage: $0 [options] <command>')
+  .command('encrypt <plaintext>', 'Encrypt the given plaintext string')
+  .command('decrypt <base64>', 'Decrypt the given base64 string')
+  .command('getSecret <secret>', 'Decrypt the given stored secret')
+  .demand(2, 2, 'When encrypting, remember to quote strings with spaces!')
   .option('e', {
     alias: 'environment',
     describe: 'The environment configuration to use'
   })
   .nargs('e', 1)
+  .option('f', {
+    alias: 'file',
+    describe: 'The path to the config file to use. By default, cryptex will attempt to load ' +
+      'cryptex.json from the current directory.'
+  })
+  .nargs('f', 1)
   .version(pkg.version)
   .help('help')
+  .strict()
   .argv
 
 /* eslint no-console:0 */
 const output = console.log
 
 function run() {
-  cryptex.update({ env: argv.e })
+  const cryptArgs = { env: argv.e }
+  if (argv.f) cryptArgs.file = argv.f
+  cryptex.update(cryptArgs)
   const command = argv._[0].toLowerCase()
   switch (command) {
   case 'encrypt':
-    return cryptex.encrypt(argv._[1]).then(output)
+    return cryptex.encrypt(argv.plaintext).then(output)
   case 'decrypt':
-    return cryptex.decrypt(argv._[1]).then(output)
+    return cryptex.decrypt(argv.base64).then(output)
   case 'getsecret':
-    return cryptex.getSecret(argv._[1]).then(output)
+    return cryptex.getSecret(argv.secret).then(output)
   default:
     return Promise.resolve().then(yargs.showHelp())
   }
