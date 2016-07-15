@@ -166,7 +166,7 @@ class Cryptex {
       throw new UserError('Cryptex files must end in .json')
     }
     try {
-      this._confFile = _.clone(require(this._opts.file), true)
+      this._confFile = _.clone(require(path.resolve(this._opts.file)), true)
     } catch (e) {
       this._confFile = {}
     }
