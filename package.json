@@ -19,6 +19,9 @@
   "files": [
     "src"
   ],
+  "engines": {
+    "node": ">=4.2.0"
+  },
   "keywords": [
     "crypto",
     "key",
