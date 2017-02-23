@@ -1,4 +1,6 @@
 # Cryptex [![Build Status](https://travis-ci.org/TechnologyAdvice/Cryptex.svg?branch=master)](https://travis-ci.org/TechnologyAdvice/Cryptex) [![Code Climate](https://codeclimate.com/github/TechnologyAdvice/Cryptex/badges/gpa.svg)](https://codeclimate.com/github/TechnologyAdvice/Cryptex) [![Test Coverage](https://codeclimate.com/github/TechnologyAdvice/Cryptex/badges/coverage.svg)](https://codeclimate.com/github/TechnologyAdvice/Cryptex/coverage)
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/TechnologyAdvice/Cryptex.svg)](https://greenkeeper.io/)
 Secure secret storage and cryptographic key retrieval for Node.js
 
 ```javascript
