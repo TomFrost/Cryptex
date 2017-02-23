@@ -45,18 +45,18 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "chai-as-promised": "^5.3.0",
+    "chai-as-promised": "^6.0.0",
     "eslint": "^3.0.1",
     "istanbul": "^0.4.4",
-    "mocha": "^2.5.3",
-    "nock": "^8.0.0",
+    "mocha": "^3.2.0",
+    "nock": "^9.0.6",
     "sinon": "^1.17.4",
-    "tmp": "0.0.28"
+    "tmp": "0.0.31"
   },
   "dependencies": {
     "aws-sdk": "^2.4.6",
-    "lodash": "^3.10.1",
+    "lodash": "^4.17.4",
     "request": "^2.73.0",
-    "yargs": "^4.8.0"
+    "yargs": "^6.6.0"
   }
 }
