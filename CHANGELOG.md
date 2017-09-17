@@ -13,8 +13,8 @@ Nothing yet!
 - Babel has been removed. Cryptex now requires Node version 4 or higher.
 
 ### Fixed
-- Super-long integers passed in on the CLI for encryption are no longer automatically rounded by Javascript. ([#5](https://github.com/TechnologyAdvice/Cryptex/issues/5))
-- Inaccuracies in the README documentation ([#3](https://github.com/TechnologyAdvice/Cryptex/pull/3), [#4](https://github.com/TechnologyAdvice/Cryptex/pull/4))
+- Super-long integers passed in on the CLI for encryption are no longer automatically rounded by Javascript. ([#5](https://github.com/TomFrost/Cryptex/issues/5))
+- Inaccuracies in the README documentation ([#3](https://github.com/TomFrost/Cryptex/pull/3), [#4](https://github.com/TomFrost/Cryptex/pull/4))
 
 ## [v0.6.1] - 2015-11-13
 ### Fixed
@@ -77,15 +77,15 @@ Nothing yet!
 ### Added
 - Initial release
 
-[Development]: https://github.com/TechnologyAdvice/Cryptex/compare/v1.0.0...HEAD
-[v1.0.0]: https://github.com/TechnologyAdvice/Cryptex/compare/0.6.1...v1.0.0
-[v0.6.1]: https://github.com/TechnologyAdvice/Cryptex/compare/0.6.0...0.6.1
-[v0.6.0]: https://github.com/TechnologyAdvice/Cryptex/compare/0.5.0...0.6.0
-[v0.5.0]: https://github.com/TechnologyAdvice/Cryptex/compare/0.4.1...0.5.0
-[v0.4.1]: https://github.com/TechnologyAdvice/Cryptex/compare/0.4.0...0.4.1
-[v0.4.0]: https://github.com/TechnologyAdvice/Cryptex/compare/0.3.1...0.4.0
-[v0.3.1]: https://github.com/TechnologyAdvice/Cryptex/compare/0.3.0...0.3.1
-[v0.3.0]: https://github.com/TechnologyAdvice/Cryptex/compare/0.2.2...0.3.0
-[v0.2.2]: https://github.com/TechnologyAdvice/Cryptex/compare/0.2.1...0.2.2
-[v0.2.1]: https://github.com/TechnologyAdvice/Cryptex/compare/0.2.0...0.2.1
-[v0.2.0]: https://github.com/TechnologyAdvice/Cryptex/compare/0.1.0...0.2.0
+[Development]: https://github.com/TomFrost/Cryptex/compare/v1.0.0...HEAD
+[v1.0.0]: https://github.com/TomFrost/Cryptex/compare/0.6.1...v1.0.0
+[v0.6.1]: https://github.com/TomFrost/Cryptex/compare/0.6.0...0.6.1
+[v0.6.0]: https://github.com/TomFrost/Cryptex/compare/0.5.0...0.6.0
+[v0.5.0]: https://github.com/TomFrost/Cryptex/compare/0.4.1...0.5.0
+[v0.4.1]: https://github.com/TomFrost/Cryptex/compare/0.4.0...0.4.1
+[v0.4.0]: https://github.com/TomFrost/Cryptex/compare/0.3.1...0.4.0
+[v0.3.1]: https://github.com/TomFrost/Cryptex/compare/0.3.0...0.3.1
+[v0.3.0]: https://github.com/TomFrost/Cryptex/compare/0.2.2...0.3.0
+[v0.2.2]: https://github.com/TomFrost/Cryptex/compare/0.2.1...0.2.2
+[v0.2.1]: https://github.com/TomFrost/Cryptex/compare/0.2.0...0.2.1
+[v0.2.0]: https://github.com/TomFrost/Cryptex/compare/0.1.0...0.2.0

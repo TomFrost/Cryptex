@@ -1,4 +1,4 @@
-# Cryptex [![Build Status](https://travis-ci.org/TechnologyAdvice/Cryptex.svg?branch=master)](https://travis-ci.org/TechnologyAdvice/Cryptex) [![Code Climate](https://codeclimate.com/github/TechnologyAdvice/Cryptex/badges/gpa.svg)](https://codeclimate.com/github/TechnologyAdvice/Cryptex) [![Test Coverage](https://codeclimate.com/github/TechnologyAdvice/Cryptex/badges/coverage.svg)](https://codeclimate.com/github/TechnologyAdvice/Cryptex/coverage)
+# Cryptex [![Build Status](https://travis-ci.org/TomFrost/Cryptex.svg?branch=master)](https://travis-ci.org/TomFrost/Cryptex)
 Secure secret storage and cryptographic key retrieval for Node.js
 
 ```javascript
@@ -224,4 +224,8 @@ in doubt, use Amazon KMS.
 Embassy supports Node 4 LTE and higher out of the box. For 0.12, consider compiling with Babel.
 
 ## License
-All original content is Copyright (c) 2015-2016 TechnologyAdvice, released under the ultra-permissive ISC license. See LICENSE.txt for details.
+Cryptex is released under the ultra-permissive ISC license. See LICENSE.txt for details.
+
+## Credits
+Cryptex was originally created at [TechnologyAdvice](http://www.technologyadvice.com) in Nashville, TN.
+

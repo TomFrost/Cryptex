@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /*
- * Copyright (c) 2015-1016 TechnologyAdvice
+ * Copyright (c) 2017 Tom Shawver
  */
 
 'use strict'

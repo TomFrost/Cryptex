@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TechnologyAdvice/Cryptex.git"
+    "url": "git+https://github.com/TomFrost/Cryptex.git"
   },
   "files": [
     "src"
@@ -34,12 +34,12 @@
     "encryption",
     "decryption"
   ],
-  "author": "TechnologyAdvice <devteam@technologyadvice.com>",
+  "author": "Tom Shawver <tom@frosteddesign.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/TechnologyAdvice/Cryptex/issues"
+    "url": "https://github.com/TomFrost/Cryptex/issues"
   },
-  "homepage": "https://github.com/TechnologyAdvice/Cryptex#readme",
+  "homepage": "https://github.com/TomFrost/Cryptex#readme",
   "yargs": {
     "parse-numbers": false
   },
