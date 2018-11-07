@@ -80,8 +80,8 @@ aws kms generate-data-key-without-plaintext \
 ```
 
 ##### kms options:
-`dataKey` `CRYPTEX_KEYSOURCE_KMS_PATH`: The base64 string you got when you ran that command above.  
-`region` `CRYPTEX_KEYSOURCE_KMS_REGION`: The AWS region (such as us-east-1) in which the master KMS key can be found. If not specified, the config already loaded into aws-sdk is used.  
+`dataKey` `CRYPTEX_KEYSOURCE_KMS_PATH`: The base64 string you got when you ran that command above.
+`region` `CRYPTEX_KEYSOURCE_KMS_REGION`: The AWS region (such as us-east-1) in which the master KMS key can be found. If not specified, the config already loaded into aws-sdk is used.
 
 **A note about aws-sdk configuration:** The KMS keySource uses Amazon's official Node.js aws-sdk library. If you're using `npm>=3`, it will use the same object as any you might have in your local project, carrying over the configuration. Otherwise, please see Amazon's guide on [configuring the SDK](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html) to provide it with credentials. The **highly recommended way** to allow it to access KMS in production (assuming it's in production on AWS servers) is to attach an IAM role to the EC2 node with permission to access the master key you're using.
 
@@ -101,13 +101,13 @@ If you're using anything other than an https URL in production, you're _definite
 As with `file`, if your key file is something other than binary-encoded, set `keySourceEncoding` in your config, or set the `CRYPTEX_KEYSOURCEENCODING` environment variable, to either `base64` or `hex`.
 
 ##### http options:
-`url` `CRYPTEX_KEYSOURCE_HTTP_URL`: The URL to the key file to download  
+`url` `CRYPTEX_KEYSOURCE_HTTP_URL`: The URL to the key file to download
 `timeout` `CRYPTEX_KEYSOURCE_HTTP_TIMEOUT`: The number of milliseconds after which to fail the download. _(Default: 4000)_
 
 #### Plain text _("plaintext")_
 **DANGER.** _SHOULD NEVER BE USED IN PRODUCTION._
 
-Useful for local development and testing, this allows the key to be saved in plain text. You'll also want to set `keySourceEncoding` in your config (or the `CRYPTEX_KEYSOURCEENCODING` environment variable) to either `base64` or `hex` -- however you've stringified your key.
+Useful for local development and testing, this allows the key to be saved in plain text. You'll also want to set `keySourceEncoding` in your config (or the `CRYPTEX_KEYSOURCEENCODING` environment variable) to either `base64` or `hex` -- however, you've stringified your key.
 
 ##### plaintext options:
 `key` `CRYPTEX_KEYSOURCE_PLAINTEXT_KEY`: Your key, in plain text
@@ -116,7 +116,7 @@ Useful for local development and testing, this allows the key to be saved in pla
 This is useful if you're plugging in an algorithm that doesn't require a pre-set key to be used.
 
 ### 3. Pick an encryption algorithm
-The recommended and default algorithm is `aes256`. If you're good with that, move on! You don't even need to set `algorithm` in your config or the `CRYPTEX_ALGORITHM` environment variable. But for the sake of completeness:
+The recommended and default algorithm is `aes256`. If you're good with that, move on! You don't even need to set an `algorithm` in your config or the `CRYPTEX_ALGORITHM` environment variable. But for the sake of completeness:
 
 #### AES 256-bit _("aes256")_
 Military-grade symmetric encryption. The implementation in Cryptex computes a new random 128-bit initialization vector for each encrypted secret. Obviously, to use this, the key provided by your keySource must be a 256-bit AES key.
@@ -176,17 +176,17 @@ Encrypts the given data into a base64 string. If your string is binary data enco
 Decrypts the given data and passes it back as utf8. If your string is binary data encoded as base64 or hex, just pass `base64` or `hex` for the encoding. The encoding is ignored if a Buffer is passed in.
 
 ##### cryptex.getSecret(secret: string, optional = false): Promise\<string\>|_null_
-Gets a Promise that resolves to a pre-saved secret, decrypted. See step 5 above. If no secret of the given name was found, this function with reject by default. To have it resolve with _null_ instead, set `optional` to true.
+Gets a Promise that resolves to a pre-saved secret, decrypted. See step 5 above. If no secret of the given name was found, this function with reject by default. To have it resolve with _null_ instead set `optional` to true.
 
 ##### cryptex.getSecrets(secrets: Array\<string\>, optional = false): Promise\<Object\>
 Gets a Promise that resolves to an object mapping the requested secret names to their decrypted values. Unlike calling `getSecret` multiple times, this function will wait for the key to be cached (if enabled) from decrypting the first secret before decrypting the rest. This provides a faster and more efficient delivery of multiple secrets.  If `optional` is set to `true`, any requested secrets not found will have their values in the object map set to `null`. Otherwise, the returned Promise will be rejected.
 
 ##### cryptex.update(opts = {})
-Updates the cryptex instance with new configuration. Available options are:
+Updates the cryptex instance with a new configuration. Available options are:
 
-**file:** The path to a json file to load, mapping environments names (as pulled from `$NODE_ENV`) to configuration objects. Can also be set in `CRYPTEX_FILE`. Defaults to `cryptex.json` in the app process's current working directory.
+**file:** The path to a JSON file to load, mapping environments names (as pulled from `$NODE_ENV`) to configuration objects. Can also be set in `CRYPTEX_FILE`. Defaults to `cryptex.json` in the app process's current working directory.
 
-**env:** The environment to select from the specified json file. Cryptex will attempt to pull an environment in this order: This value, the `CRYPTEX_ENV` env var, the `NODE_ENV` env var, or default to `default` if all else has failed.
+**env:** The environment to select from the specified JSON file. Cryptex will attempt to pull an environment in this order: This value, the `CRYPTEX_ENV` env var, the `NODE_ENV` env var, or default to `default` if all else has failed.
 
 **cacheKey:** Boolean true to cache the key returned by the keySource in RAM, false to pull the key from the source every time it's needed. Can also be set in `CRYPTEX_CACHEKEY` with "true" or "false". _(Default: true)_
 
@@ -206,22 +206,22 @@ npm install --save cryptex
 Cryptex uses ES6 native Promises, available in Node.js version 0.12 and up.
 
 ## Security warning
-The state of cryptographic security in Javascript is abysmal at best. Node lends itself to far better possibilities than what you'd find in the browser, but be aware of the following types of attacks:
+The state of cryptographic security in JavaScript is abysmal at best. Node lends itself to far better possibilities than what you'd find in the browser, but be aware of the following types of attacks:
 
-- Javascript modules that require('cryptex') or some other portion of your code,
+- JavaScript modules that require('cryptex') or some other portion of your code,
 overriding `getSecret` or other functions to steal your decrypted private data.
-- Javascript modules that require('crypto') and monkey-patch the built-in Node library
+- JavaScript modules that require('crypto') and monkey-patch the built-in Node library
 to steal private data.
 - Nefarious applications that dump the RAM from your Node process. Node's garbage
-collector cannot be forced to run from Javascript, so even turning off the key cache
+collector cannot be forced to run from JavaScript, so even turning off the key cache
 could expose a window in which an unencrypted key could be stolen.
-- Applications, server users, or javascript modules that read local key files. When
+- Applications, server users, or JavaScript modules that read local key files. When
 in doubt, use Amazon KMS.
 
-[This article by NCC Group](https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2011/august/javascript-cryptography-considered-harmful/) is from 2011 and focuses on the security of Javascript in the browser, but is still very much applicable today.  However, by using Amazon KMS, Cryptex, and with careful review of all installed modules, a secure system in Node.js is possible.
+[This article by NCC Group](https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2011/august/javascript-cryptography-considered-harmful/) is from 2011 and focuses on the security of JavaScript in the browser, but is still very much applicable today.  However, by using Amazon KMS, Cryptex, and with the careful review of all installed modules, a secure system in Node.js is possible.
 
 ## Versions
-Embassy supports Node 4 LTE and higher out of the box. For 0.12, consider compiling with Babel.
+Embassy supports Node 4 LTS and higher out of the box. For 0.12, consider compiling with Babel.
 
 ## License
 Cryptex is released under the ultra-permissive ISC license. See LICENSE.txt for details.
