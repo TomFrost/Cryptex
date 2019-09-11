@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Tom Shawver
+ * Copyright (c) 2017-2019 Tom Shawver
  */
 
 'use strict'
@@ -11,7 +11,7 @@ const tmp = require('tmp')
 let tmpFile
 
 describe('File Source', () => {
-  before((done) => {
+  beforeAll(done => {
     tmp.tmpName((err, path) => {
       tmpFile = path
       if (err) done(err)
@@ -20,20 +20,19 @@ describe('File Source', () => {
       }
     })
   })
-  after((done) => {
+  afterAll(done => {
     fs.unlink(tmpFile, done)
   })
   it('resolves with the file contents', () => {
-    return getKey({path: tmpFile}).then((key) => {
-      should.exist(key)
-      key.should.be.instanceof(Buffer)
-      key.toString().should.equal('foo')
+    return getKey({ path: tmpFile }).then(key => {
+      expect(key).toBeInstanceOf(Buffer)
+      expect(key.toString()).toEqual('foo')
     })
   })
   it('rejects when option "path" is missing', () => {
-    return getKey().should.be.rejected
+    return expect(getKey()).rejects.toThrow()
   })
   it('rejects when path does not exist', () => {
-    return getKey({path: '/lol/no'}).should.be.rejected
+    return expect(getKey({ path: '/lol/no' })).rejects.toThrow()
   })
 })

@@ -5,16 +5,15 @@
   "main": "src/index.js",
   "bin": "./src/cli.js",
   "scripts": {
+    "format": "prettier --write '**/*.{json,js,md}'",
+    "lint": "eslint '**/*.js'",
     "clean": "rm -rf node_modules coverage",
-    "test": "npm run lint && npm run test-cov && npm run check-cov",
-    "mocha": "mocha",
-    "test-cov": "istanbul cover node_modules/.bin/_mocha",
-    "check-cov": "istanbul check-coverage --statements 99 --branches 98 --functions 100 --lines 99",
-    "lint": "eslint ./src ./test"
+    "test": "npm run lint && NODE_PATH=./ RESOURCES_PATH=./src jest --coverage --colors",
+    "test:watch": "NODE_PATH=./ RESOURCES_PATH=./src jest --watchAll --colors"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TomFrost/Cryptex.git"
+    "url": "https://github.com/TomFrost/Cryptex"
   },
   "files": [
     "src"
@@ -43,20 +42,61 @@
   "yargs": {
     "parse-numbers": false
   },
+  "eslintIgnore": [
+    "node_modules",
+    "coverage"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.{md,json}": [
+      "prettier --write",
+      "git add"
+    ],
+    "**/*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "verbose": true,
+    "testPathIgnorePatterns": [],
+    "coverageThreshold": {
+      "global": {
+        "branches": 85,
+        "functions": 90,
+        "lines": 95,
+        "statements": 95
+      }
+    },
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/coverage/",
+      "src/cli.js"
+    ]
+  },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "chai-as-promised": "^5.3.0",
-    "eslint": "^3.0.1",
-    "istanbul": "^0.4.4",
-    "mocha": "^2.5.3",
-    "nock": "^8.0.0",
-    "sinon": "^1.17.4",
-    "tmp": "0.0.28"
+    "eslint": "^6.3.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "husky": "^3.0.5",
+    "jest": "^24.9.0",
+    "lint-staged": "^9.2.5",
+    "nock": "^11.3.3",
+    "prettier": "^1.18.2",
+    "tmp": "^0.1.0"
   },
   "dependencies": {
-    "aws-sdk": "^2.4.6",
-    "lodash": "^3.10.1",
-    "request": "^2.73.0",
-    "yargs": "^4.8.0"
+    "aws-sdk": "^2.526.0",
+    "lodash": "^4.17.15",
+    "request": "^2.88.0",
+    "yargs": "^14.0.0"
   }
 }

@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2017 Tom Shawver
+ * Copyright (c) 2017-2019 Tom Shawver
  */
 
 'use strict'
 
-module.exports = (data) => {
+module.exports = data => {
   let hexStr = Buffer.isBuffer(data) ? data.toString() : data
   hexStr = hexStr.toLowerCase()
   return new Buffer(hexStr, 'hex')

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Tom Shawver
+ * Copyright (c) 2017-2019 Tom Shawver
  */
 
 'use strict'
@@ -16,7 +16,9 @@ class SymmetricAlgo {
   }
 
   decrypt(key, secret) {
-    const ivEnc = Buffer.isBuffer(secret) ? secret : new Buffer(secret, encEncoding)
+    const ivEnc = Buffer.isBuffer(secret)
+      ? secret
+      : new Buffer(secret, encEncoding)
     const iv = ivEnc.slice(0, this.ivBytes)
     const enc = ivEnc.slice(this.ivBytes)
     const decipher = crypto.createDecipheriv(this.algo, key, iv)
@@ -25,7 +27,7 @@ class SymmetricAlgo {
   }
 
   encrypt(key, secret) {
-    return this._generateIV().then((iv) =>{
+    return this._generateIV().then(iv => {
       const cipher = crypto.createCipheriv(this.algo, key, iv)
       const enc = Buffer.concat([cipher.update(secret), cipher.final()])
       const ivEnc = Buffer.concat([iv, enc], iv.length + enc.length)

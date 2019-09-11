@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Tom Shawver
+ * Copyright (c) 2017-2019 Tom Shawver
  */
 
 'use strict'

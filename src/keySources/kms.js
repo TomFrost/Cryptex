@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2017 Tom Shawver
+ * Copyright (c) 2017-2019 Tom Shawver
  */
 
 'use strict'
 
 const AWS = require('aws-sdk')
 
-const getKey = (opts) => {
+const getKey = opts => {
   opts = opts || {}
   const region = process.env.CRYPTEX_KEYSOURCE_KMS_REGION || opts.region
   if (region) {

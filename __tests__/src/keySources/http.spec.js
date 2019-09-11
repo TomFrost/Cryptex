@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Tom Shawver
+ * Copyright (c) 2017-2019 Tom Shawver
  */
 
 'use strict'
@@ -13,43 +13,39 @@ describe('HTTP Source', () => {
   afterEach(() => {
     nock.cleanAll()
   })
-  it('resolves with the downloaded key', () => {
-    let mock = nock('http://test.domain')
+  it('resolves with the downloaded key', async () => {
+    const mock = nock('http://test.domain')
       .get('/key')
       .reply(200, 'foo')
-    return getKey({ url }).then((key) => {
-      should.exist(key)
-      key.should.be.instanceOf(Buffer)
-      key.toString().should.equal('foo')
-      mock.done()
-    })
+    const key = await getKey({ url })
+    expect(key).toBeInstanceOf(Buffer)
+    expect(key.toString()).toEqual('foo')
+    mock.done()
   })
-  it('gets configuration from environment variables', () => {
-    let mock = nock('http://test.domain')
+  it('gets configuration from environment variables', async () => {
+    const mock = nock('http://test.domain')
       .get('/key')
       .reply(200, 'foo')
     process.env.CRYPTEX_KEYSOURCE_HTTP_URL = url
     process.env.CRYPTEX_KEYSOURCE_HTTP_TIMEOUT = 500
-    return getKey({ url }).then((key) => {
-      should.exist(key)
-      key.should.be.instanceOf(Buffer)
-      key.toString().should.equal('foo')
-      mock.done()
-    })
+    const key = await getKey({ url })
+    expect(key).toBeInstanceOf(Buffer)
+    expect(key.toString()).toEqual('foo')
+    mock.done()
   })
   it('rejects if option "url" was not specified', () => {
-    return getKey().should.be.rejected
+    return expect(getKey()).rejects.toThrow()
   })
   it('rejects if a non-200 was encountered', () => {
     nock('http://test.domain')
       .get('/key')
       .reply(404, 'foo')
-    return getKey({ url }).should.be.rejected
+    return expect(getKey({ url })).rejects.toThrow()
   })
   it('rejects if the response body is empty', () => {
     nock('http://test.domain')
       .get('/key')
       .reply(200, '')
-    return getKey({ url }).should.be.rejected
+    return expect(getKey({ url })).rejects.toThrow()
   })
 })

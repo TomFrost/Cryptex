@@ -1,7 +1,7 @@
 {
   "default": {
     "keySource": "none",
-    "algorithm":  "plaintext",
+    "algorithm": "plaintext",
     "secretEncoding": "utf8",
     "secrets": {
       "foo": "bar"

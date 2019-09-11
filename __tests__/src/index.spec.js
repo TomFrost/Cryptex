@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Tom Shawver
+ * Copyright (c) 2017-2019 Tom Shawver
  */
 
 'use strict'
@@ -12,6 +12,8 @@ const originalEnvs = _.clone(process.env)
 const fooEnc = 'Q+JfrQS5DtSjqWHu1oO4HqctA2hVw4VhaDQfBCuvO8U='
 const key = 'WJcfREHOMttStwb1927PQwpDJgOgRyVoVMODQxx3pK4='
 
+jest.useFakeTimers()
+
 describe('Cryptex Class', () => {
   afterEach(() => {
     process.env = _.clone(originalEnvs)
@@ -19,14 +21,14 @@ describe('Cryptex Class', () => {
   describe('Core API', () => {
     it('constructs without options', () => {
       const cryptex = new Cryptex()
-      should.exist(cryptex)
-      cryptex.should.be.instanceOf(Cryptex)
+      expect(cryptex).toBeDefined()
+      expect(cryptex).toBeInstanceOf(Cryptex)
     })
     it('constructs with options', () => {
-      const cryptex = new Cryptex({env: 'foo'})
-      should.exist(cryptex)
-      cryptex.should.be.instanceOf(Cryptex)
-      cryptex._opts.env.should.equal('foo')
+      const cryptex = new Cryptex({ env: 'foo' })
+      expect(cryptex).toBeDefined()
+      expect(cryptex).toBeInstanceOf(Cryptex)
+      expect(cryptex._opts.env).toEqual('foo')
     })
     it('decrypts secret with hardcoded config', () => {
       const cryptex = new Cryptex({
@@ -40,7 +42,7 @@ describe('Cryptex Class', () => {
           }
         }
       })
-      return cryptex.getSecret('foo').should.eventually.equal('foo')
+      return expect(cryptex.getSecret('foo')).resolves.toEqual('foo')
     })
     it('decrypts secret with env var config', () => {
       const cryptex = new Cryptex()
@@ -51,52 +53,40 @@ describe('Cryptex Class', () => {
       process.env.CRYPTEX_SECRET_FOO = fooEnc
       process.env.CRYPTEX_SECRETENCODING = 'base64'
       cryptex.update()
-      return cryptex.getSecret('foo').should.eventually.equal('foo')
+      return expect(cryptex.getSecret('foo')).resolves.toEqual('foo')
     })
     it('decrypts a base64 string', () => {
       process.env.CRYPTEX_KEYSOURCE = 'plaintext'
       process.env.CRYPTEX_KEYSOURCEENCODING = 'base64'
       process.env.CRYPTEX_KEYSOURCE_PLAINTEXT_KEY = key
       const cryptex = new Cryptex()
-      return cryptex.decrypt(fooEnc).should.eventually.equal('foo')
+      return expect(cryptex.decrypt(fooEnc)).resolves.toEqual('foo')
     })
-    it('encrypts and decrypts a UTF-8 string', () => {
+    it('encrypts and decrypts a UTF-8 string', async () => {
       process.env.CRYPTEX_KEYSOURCE = 'plaintext'
       process.env.CRYPTEX_KEYSOURCEENCODING = 'base64'
       process.env.CRYPTEX_KEYSOURCE_PLAINTEXT_KEY = key
       const cryptex = new Cryptex()
-      return cryptex.encrypt('foo').then((enc) => {
-        should.exist(enc)
-        enc.should.be.a.string
-        enc.length.should.be.greaterThan(0)
-        enc[enc.length - 1].should.equal('=')
-        return cryptex.decrypt(enc)
-      }).then((dec) => {
-        should.exist(dec)
-        dec.should.equal('foo')
-      })
+      const enc = await cryptex.encrypt('foo')
+      expect(enc).toMatch(/=$/)
+      const dec = await cryptex.decrypt(enc)
+      expect(dec).toEqual('foo')
     })
-    it('encrypts and decrypts a base64 string', () => {
+    it('encrypts and decrypts a base64 string', async () => {
       process.env.CRYPTEX_KEYSOURCE = 'plaintext'
       process.env.CRYPTEX_KEYSOURCEENCODING = 'base64'
       process.env.CRYPTEX_KEYSOURCE_PLAINTEXT_KEY = key
       const cryptex = new Cryptex()
-      return cryptex.encrypt('Zm9v', 'base64').then((enc) => {
-        should.exist(enc)
-        enc.should.be.a.string
-        enc.length.should.be.greaterThan(0)
-        enc[enc.length - 1].should.equal('=')
-        return cryptex.decrypt(enc)
-      }).then((dec) => {
-        should.exist(dec)
-        dec.should.equal('foo')
-      })
+      const enc = await cryptex.encrypt('Zm9v', 'base64')
+      expect(enc).toMatch(/=$/)
+      const dec = await cryptex.decrypt(enc)
+      expect(dec).toEqual('foo')
     })
     it('loads config from a file', () => {
       const cryptex = new Cryptex({
         file: path.join(__dirname, '../fixtures/cryptex.json')
       })
-      return cryptex.getSecret('foo').should.eventually.equal('bar')
+      return expect(cryptex.getSecret('foo')).resolves.toEqual('bar')
     })
     it('decrypts a secret with mixed configs', () => {
       const cryptex = new Cryptex({
@@ -107,7 +97,7 @@ describe('Cryptex Class', () => {
         }
       })
       process.env.CRYPTEX_SECRET_FOO = fooEnc
-      return cryptex.getSecret('foo').should.eventually.equal('foo')
+      return expect(cryptex.getSecret('foo')).resolves.toEqual('foo')
     })
     it('retrieves multiple secrets', () => {
       const secrets = {
@@ -123,7 +113,9 @@ describe('Cryptex Class', () => {
           secrets
         }
       })
-      return cryptex.getSecrets(['foo', 'bar', 'baz']).should.eventually.eql(secrets)
+      return expect(cryptex.getSecrets(['foo', 'bar', 'baz'])).resolves.toEqual(
+        secrets
+      )
     })
     it('retrieves multiple secrets with null for any not found', () => {
       const secrets = {
@@ -138,7 +130,9 @@ describe('Cryptex Class', () => {
           secrets
         }
       })
-      return cryptex.getSecrets(['foo', 'bar', 'baz'], true).should.eventually.eql({
+      return expect(
+        cryptex.getSecrets(['foo', 'bar', 'baz'], true)
+      ).resolves.toEqual({
         foo: 'foo',
         bar: 'bar',
         baz: null
@@ -153,7 +147,7 @@ describe('Cryptex Class', () => {
         }
       })
       process.env.CRYPTEX_SECRET_FOO = fooEnc
-      return cryptex.getSecret('foo').should.be.rejected
+      return expect(cryptex.getSecret('foo')).rejects.toThrow()
     })
     it('rejects on missing modules', () => {
       const cryptex = new Cryptex({
@@ -162,50 +156,40 @@ describe('Cryptex Class', () => {
         }
       })
       process.env.CRYPTEX_SECRET_FOO = fooEnc
-      return cryptex.getSecret('foo').should.be.rejected
+      return expect(cryptex.getSecret('foo')).rejects.toThrow()
     })
     it('rejects on missing required secrets', () => {
       process.env.CRYPTEX_KEYSOURCE = 'plaintext'
       process.env.CRYPTEX_KEYSOURCEENCODING = 'base64'
       process.env.CRYPTEX_KEYSOURCE_PLAINTEXT_KEY = key
-      const cryptex = new Cryptex({config: {}})
-      return cryptex.getSecret('foo').should.be.rejected
+      const cryptex = new Cryptex({ config: {} })
+      return expect(cryptex.getSecret('foo')).rejects.toThrow()
     })
     it('resolves null on missing optional secrets', () => {
       process.env.CRYPTEX_KEYSOURCE = 'plaintext'
       process.env.CRYPTEX_KEYSOURCEENCODING = 'base64'
       process.env.CRYPTEX_KEYSOURCE_PLAINTEXT_KEY = key
-      const cryptex = new Cryptex({config: {}})
-      return cryptex.getSecret('foo', true).should.eventually.be.null
+      const cryptex = new Cryptex({ config: {} })
+      return expect(cryptex.getSecret('foo', true)).resolves.toBeNull()
     })
     it('throws on non-json config', () => {
       process.env.CRYPTEX_FILE = '../somefile.js'
-      let success = false
-      try {
-        const cryptex = new Cryptex()
-        should.not.exist(cryptex)
-      } catch (e) {
-        success = true
-        e.should.be.instanceOf(Error)
-      }
-      if (!success) {
-        throw new Error('should not be reachable')
-      }
+      expect(() => new Cryptex()).toThrow()
     })
     it('falls back to empty config on file not found', () => {
       process.env.CRYPTEX_FILE = 'somefile.json'
       const cryptex = new Cryptex()
-      should.exist(cryptex)
+      expect(cryptex).toBeDefined()
     })
     it('rejects when no keySource is set', () => {
       const cryptex = new Cryptex({
         config: {
           algorithm: 'plaintext',
           secretEncoding: 'utf8',
-          secrets: {foo: 'bar'}
+          secrets: { foo: 'bar' }
         }
       })
-      return cryptex.getSecret('foo').should.be.rejected
+      return expect(cryptex.getSecret('foo')).rejects.toThrow()
     })
     it('retrieves multiple secrets and rejects for any not found', () => {
       const secrets = {
@@ -220,60 +204,49 @@ describe('Cryptex Class', () => {
           secrets
         }
       })
-      return cryptex.getSecrets(['foo', 'bar', 'baz']).should.be.rejected
+      return expect(cryptex.getSecrets(['foo', 'bar', 'baz'])).rejects.toThrow()
     })
   })
   describe('Key caching', () => {
-    let clock
-    beforeEach(() => {
-      clock = sinon.useFakeTimers()
-    })
-    afterEach(() => {
-      clock.restore()
-    })
-    it('does not cache when caching is disabled', () => {
+    it('does not cache when caching is disabled', async () => {
       process.env.CRYPTEX_KEYSOURCE = 'plaintext'
       process.env.CRYPTEX_KEYSOURCEENCODING = 'base64'
       process.env.CRYPTEX_KEYSOURCE_PLAINTEXT_KEY = key
       process.env.CRYPTEX_CACHEKEY = 'false'
       const cryptex = new Cryptex()
-      return cryptex.decrypt(fooEnc).then(() => {
-        cryptex.should.not.have.property('_key')
-      })
+      await cryptex.decrypt(fooEnc)
+      expect(cryptex).not.toHaveProperty('_key')
     })
-    it('does not cache when caching is disabled', () => {
+    it('does not cache when caching is disabled', async () => {
       process.env.CRYPTEX_KEYSOURCE = 'plaintext'
       process.env.CRYPTEX_KEYSOURCEENCODING = 'base64'
       process.env.CRYPTEX_KEYSOURCE_PLAINTEXT_KEY = key
       process.env.CRYPTEX_CACHEKEY = 'false'
       const cryptex = new Cryptex()
-      return cryptex.decrypt(fooEnc).then(() => {
-        cryptex.should.not.have.property('_key')
-      })
+      await cryptex.decrypt(fooEnc)
+      expect(cryptex).not.toHaveProperty('_key')
     })
-    it('does not expire cache with timeout=0', () => {
+    it('does not expire cache with timeout=0', async () => {
       process.env.CRYPTEX_KEYSOURCE = 'plaintext'
       process.env.CRYPTEX_KEYSOURCEENCODING = 'base64'
       process.env.CRYPTEX_KEYSOURCE_PLAINTEXT_KEY = key
       process.env.CRYPTEX_CACHEKEY = 'true'
       process.env.CRYPTEX_CACHETIMEOUT = '0'
       const cryptex = new Cryptex()
-      return cryptex.decrypt(fooEnc).then(() => {
-        clock.tick(10000)
-        cryptex.should.have.property('_key')
-      })
+      await cryptex.decrypt(fooEnc)
+      jest.advanceTimersByTime(10000)
+      expect(cryptex).toHaveProperty('_key')
     })
-    it('expires cache after specified timeout', () => {
+    it('expires cache after specified timeout', async () => {
       process.env.CRYPTEX_KEYSOURCE = 'plaintext'
       process.env.CRYPTEX_KEYSOURCEENCODING = 'base64'
       process.env.CRYPTEX_KEYSOURCE_PLAINTEXT_KEY = key
       process.env.CRYPTEX_CACHEKEY = 'true'
       process.env.CRYPTEX_CACHETIMEOUT = '2000'
       const cryptex = new Cryptex()
-      return cryptex.decrypt(fooEnc).then(() => {
-        clock.tick(2010)
-        cryptex.should.not.have.property('_key')
-      })
+      await cryptex.decrypt(fooEnc)
+      jest.advanceTimersByTime(2010)
+      expect(cryptex).not.toHaveProperty('_key')
     })
   })
 })
