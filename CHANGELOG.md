@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [development]
 
+Nothing yet!
+
+## [v1.0.1] - 2019-09-11
+
 ### Changed
 
 - The formatting of the codebase has been updated to use Prettier + ESLint
@@ -117,7 +121,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - Initial release
 
-[development]: https://github.com/TomFrost/Cryptex/compare/v1.0.0...HEAD
+[development]: https://github.com/TomFrost/Cryptex/compare/v1.0.1...HEAD
+[v1.0.1]: https://github.com/TomFrost/Cryptex/compare/v1.0.0...v1.0.1
 [v1.0.0]: https://github.com/TomFrost/Cryptex/compare/0.6.1...v1.0.0
 [v0.6.1]: https://github.com/TomFrost/Cryptex/compare/0.6.0...0.6.1
 [v0.6.0]: https://github.com/TomFrost/Cryptex/compare/0.5.0...0.6.0
