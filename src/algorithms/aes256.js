@@ -8,7 +8,13 @@ const SymmetricAlgo = require('../lib/SymmetricAlgo')
 
 class AES256 extends SymmetricAlgo {
   constructor() {
-    super('aes256', 16)
+    let algoName = 'aes256';
+    const versions = process.versions;
+    if (versions.hasOwnProperty('electron') ||
+      (versions.hasOwnProperty('v8') && versions.v8.toLowerCase().indexOf('electron') > -1)) {
+      algoName = 'aes-256-cbc';
+    }
+    super(algoName, 16);
   }
 }
 
