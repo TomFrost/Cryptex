@@ -11,6 +11,7 @@ const UserError = require('./lib/UserError')
 const yargs = require('yargs')
 
 const argv = yargs
+  .parserConfiguration({ 'parse-numbers': false })
   .usage('Usage: $0 [options] <command>')
   .command('encrypt <plaintext>', 'Encrypt the given plaintext string')
   .command('decrypt <base64>', 'Decrypt the given base64 string')
