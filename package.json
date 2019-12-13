@@ -39,9 +39,6 @@
     "url": "https://github.com/TomFrost/Cryptex/issues"
   },
   "homepage": "https://github.com/TomFrost/Cryptex#readme",
-  "yargs": {
-    "parse-numbers": false
-  },
   "eslintIgnore": [
     "node_modules",
     "coverage"
